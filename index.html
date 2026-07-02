@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body { background: #0b0e14; color: #fff; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #1a1a2e; padding: 40px; border-radius: 20px; border: 1px solid #e94560; text-align: center; width: 350px; }
+        input { background: transparent; border: 2px solid #e94560; color: white; padding: 10px; width: 80%; text-align: center; margin-bottom: 20px; outline: none; }
+        button { background: #e94560; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="card" id="step1">
+    <h1>Welcome Hayati ❤️</h1>
+    <input type="text" id="i1" placeholder="Relationship Date (DD/MM/YYYY)">
+    <button onclick="check('i1', 'MDMvMDkvMjAyNQ==', 'step2')">Unlock</button>
+</div>
+
+<div class="card hidden" id="step2">
+    <h1>Special Time?</h1>
+    <input type="text" id="i2" placeholder="HH:MM">
+    <button onclick="check('i2', 'MTI6MTI=', 'final')">Next</button>
+</div>
+
+<div class="card hidden" id="final">
+    <h1 style="color: #e94560;">Happy 11th Monthsary Hayati ❤️</h1>
+    <p id="msg" style="font-size: 1.1rem; line-height: 1.6;"></p>
+</div>
+
+<script>
+    function check(id, secret, nextId) {
+        if (btoa(document.getElementById(id).value) === secret) {
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById(nextId).classList.remove('hidden');
+            if(nextId === 'final') typeMessage();
+        } else { alert("Access Denied!"); }
+    }
+
+    function typeMessage() {
+        const text = "11 mahine beet gaye, par lagta hai jaise kal hi toh mile the. Tumhari baatein, tumhara saath aur tumhara hona—mere liye duniya ka sabse khoobsurat ehsas hai. Yeh 11th monthsary sirf ek milestone nahi, balki humare us safar ki ek choti si jhanki hai jo abhi bahut door tak jaani hai. Hayati, tum meri zindagi ka woh hissa ho jiske bina main ab khud ko imagine bhi nahi kar sakta. Hamesha aise hi saath rehna, kyunki tumhare saath har pal ek celebration hai. Love you so much, Hayati! ❤️";
+        let i = 0;
+        function writer() {
+            if (i < text.length) {
+                document.getElementById("msg").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(writer, 40);
+            }
+        }
+        writer();
+    }
+</script>
+</body>
+</html>
+
