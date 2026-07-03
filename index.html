@@ -7,7 +7,7 @@
         .gallery img { width: 250px; height: 250px; border-radius: 30px; object-fit: cover; display: none; border: 4px solid #ff3366; }
         button { background: linear-gradient(45deg, #ff3366, #ff0055); border: none; padding: 12px 25px; color: white; border-radius: 25px; cursor: pointer; margin-top: 20px; font-weight: bold; transition: 0.3s; }
         button:hover { transform: scale(1.05); }
-        .heart { position: absolute; color: #ff3366; font-size: 20px; animation: rain linear infinite; }
+        .heart { position: absolute; color: #ff3366; font-size: 20px; animation: rain linear infinite; pointer-events: none; }
         @keyframes rain { to { transform: translateY(100vh); } }
     </style>
 </head>
@@ -17,17 +17,16 @@
 
 <div class="card">
     <div class="gallery">
-        <img src="https://ibb.co/gk0jwPT" id="p1" style="display:block;">
-        <img src="https://ibb.co/hJ316dR1" id="p2">
-        <img src="https://ibb.co/Jw1bN0HR" id="p3">
-        <img src="https://ibb.co/KcD4qkZF" id="p4">
-        <img src="https://ibb.co/F4sQzZNK" id="p5">
+        <img src="https://i.ibb.co/mFk4D8v/photo1.jpg" id="p1" style="display:block;">
+        <img src="https://i.ibb.co/L9p6z0t/photo2.jpg" id="p2">
+        <img src="https://i.ibb.co/v3Z5x7q/photo3.jpg" id="p3">
+        <img src="https://i.ibb.co/K2s8m9n/photo4.jpg" id="p4">
+        <img src="https://i.ibb.co/p5b2v1x/photo5.jpg" id="p5">
     </div>
     <button onclick="next()">Agli Yaad ❤️</button>
 </div>
 
 <script>
-    // Heart Rain Effect
     setInterval(() => {
         let h = document.createElement('div');
         h.innerHTML = "❤️";
