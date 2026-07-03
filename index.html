@@ -2,33 +2,34 @@
 <html lang="en">
 <head>
     <style>
-        body { margin: 0; background: radial-gradient(circle, #1a050b, #000); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        .card { background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2); text-align: center; width: 320px; backdrop-filter: blur(20px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); text-align: center; width: 90%; max-width: 400px; backdrop-filter: blur(25px); box-shadow: 0 0 40px rgba(255, 51, 102, 0.2); }
+        input { background: rgba(255,255,255,0.05); border: 1px solid #ff3366; color: #fff; padding: 15px; width: 80%; border-radius: 20px; margin: 20px 0; outline: none; text-align: center; font-size: 16px; }
+        button { background: #ff3366; border: none; padding: 15px 30px; color: #fff; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.4s; }
+        .gallery img { width: 100%; height: 350px; object-fit: contain; border-radius: 20px; display: none; margin-bottom: 20px; }
+        .heart { position: absolute; color: #ff3366; font-size: 24px; animation: floatUp 4s linear infinite; pointer-events: none; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
         .hidden { display: none; }
-        input { background: rgba(255,255,255,0.1); border: 1px solid #ff3366; color: white; padding: 12px; width: 85%; border-radius: 15px; margin: 15px 0; outline: none; text-align: center; }
-        button { background: linear-gradient(45deg, #ff3366, #ff0055); border: none; padding: 12px 25px; color: white; border-radius: 20px; cursor: pointer; font-weight: bold; }
-        .gallery img { width: 100%; height: 300px; object-fit: contain; border-radius: 20px; display: none; margin-bottom: 20px; border: 2px solid #ff3366; }
-        .heart { position: absolute; color: #ff3366; font-size: 20px; animation: rain linear infinite; pointer-events: none; }
-        @keyframes rain { to { transform: translateY(100vh); } }
+        .message { margin-top: 20px; font-style: italic; color: #ffccd5; line-height: 1.6; }
     </style>
 </head>
 <body>
 
 <div id="heart-container"></div>
 
-<div class="card" id="lock1">
-    <h2>Access Required ❤️</h2>
+<div class="glass-card" id="lock1">
+    <h1>Hayati ❤️</h1>
     <input type="password" id="d1" placeholder="Enter Date (DD/MM/YYYY)">
-    <button onclick="check('d1', 'MDMvMDkvMjAyNQ==', 'lock2')">Enter</button>
+    <button onclick="unlock('d1', 'MDMvMDkvMjAyNQ==', 'lock2')">Enter Secret</button>
 </div>
 
-<div class="card hidden" id="lock2">
-    <h2>Special Time? ⏳</h2>
+<div class="glass-card hidden" id="lock2">
+    <h1>Special Time? ⏳</h1>
     <input type="password" id="d2" placeholder="Enter Time (HH:MM)">
-    <button onclick="check('d2', 'MTI6MTI=', 'gallery')">Show Memories</button>
+    <button onclick="unlock('d2', 'MTI6MTI=', 'gallery')">Access Memories</button>
 </div>
 
-<div class="card hidden" id="gallery">
+<div class="glass-card hidden" id="gallery">
     <div class="gallery">
         <img src="https://i.ibb.co/qTHy9Ws/Screenshot-2026-07-03-12-31-51-73-99c04817c0de5652397fc8b56c3b3817.jpg" id="p1" style="display:block;">
         <img src="https://i.ibb.co/cS4XB8cX/Screenshot-2026-07-03-12-32-35-11-99c04817c0de5652397fc8b56c3b3817.jpg" id="p2">
@@ -36,35 +37,32 @@
         <img src="https://i.ibb.co/1GsCTyhL/Screenshot-2026-07-03-12-32-03-49-99c04817c0de5652397fc8b56c3b3817.jpg" id="p4">
         <img src="https://i.ibb.co/jPNxdBDv/Screenshot-2026-07-03-12-32-22-08-99c04817c0de5652397fc8b56c3b3817.jpg" id="p5">
     </div>
+    <p class="message">"11 mahine beet gaye, aur har pal tumhare saath ek nayi duniya jaisa lagta hai. Tumhare bina ye safar namumkin tha. Meri har khushi, meri har muskaan ka karan tum ho. Happy 11th Month Anniversary, Hayati! Aage ki zindagi bhi aise hi saath chalna hai." ❤️</p>
     <button onclick="next()">Next Memory ❤️</button>
 </div>
 
 <script>
-    function spawnHearts() {
-        for(let i=0; i<15; i++) {
+    function rain() {
+        for(let i=0; i<10; i++) {
             let h = document.createElement('div');
             h.innerHTML = "❤️"; h.className = "heart";
-            h.style.left = Math.random() * 100 + "vw";
-            h.style.animationDuration = Math.random() * 2 + 3 + "s";
+            h.style.left = Math.random() * 90 + "vw";
             document.getElementById('heart-container').appendChild(h);
-            setTimeout(() => h.remove(), 5000);
+            setTimeout(() => h.remove(), 4000);
         }
     }
-
-    function check(id, secret, nextId) {
+    function unlock(id, secret, nextId) {
         if (btoa(document.getElementById(id).value) === secret) {
-            spawnHearts();
-            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            rain(); document.querySelectorAll('.glass-card').forEach(c => c.classList.add('hidden'));
             document.getElementById(nextId).classList.remove('hidden');
-        } else { alert("Try Again Hayati! 💔"); }
+        } else { alert("Wrong! Try again."); }
     }
-
     let pCount = 1;
     function next() {
-        spawnHearts();
         document.getElementById('p'+pCount).style.display = 'none';
         pCount = (pCount >= 5) ? 1 : pCount + 1;
         document.getElementById('p'+pCount).style.display = 'block';
+        rain();
     }
 </script>
 </body>
