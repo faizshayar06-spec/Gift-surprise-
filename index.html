@@ -2,31 +2,32 @@
 <html lang="en">
 <head>
     <style>
-        body { margin: 0; background: radial-gradient(circle, #2d0b16, #000); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        .card { background: rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 30px; border: 1px solid #ff3366; text-align: center; width: 300px; backdrop-filter: blur(15px); }
+        body { margin: 0; background: radial-gradient(circle, #1a050b, #000); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        .card { background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2); text-align: center; width: 320px; backdrop-filter: blur(20px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .hidden { display: none; }
-        input { background: rgba(255,255,255,0.1); border: 1px solid #ff3366; color: white; padding: 10px; width: 80%; border-radius: 10px; margin: 10px 0; }
-        button { background: #ff3366; border: none; padding: 10px 20px; color: white; border-radius: 20px; cursor: pointer; }
-        .gallery img { width: 250px; height: 250px; border-radius: 20px; object-fit: cover; display: none; margin-bottom: 15px; border: 3px solid #ff3366; }
+        input { background: rgba(255,255,255,0.1); border: 1px solid #ff3366; color: white; padding: 12px; width: 85%; border-radius: 15px; margin: 15px 0; outline: none; text-align: center; }
+        button { background: linear-gradient(45deg, #ff3366, #ff0055); border: none; padding: 12px 25px; color: white; border-radius: 20px; cursor: pointer; font-weight: bold; }
+        .gallery img { width: 100%; height: 300px; object-fit: contain; border-radius: 20px; display: none; margin-bottom: 20px; border: 2px solid #ff3366; }
+        .heart { position: absolute; color: #ff3366; font-size: 20px; animation: rain linear infinite; pointer-events: none; }
+        @keyframes rain { to { transform: translateY(100vh); } }
     </style>
 </head>
 <body>
 
-<!-- Step 1: Lock -->
+<div id="heart-container"></div>
+
 <div class="card" id="lock1">
-    <h1>Welcome Hayati ❤️</h1>
-    <input type="text" id="dateInput" placeholder="Relationship Date (03/09/2025)">
-    <button onclick="unlock('dateInput', 'MDMvMDkvMjAyNQ==', 'lock2')">Unlock</button>
+    <h2>Access Required ❤️</h2>
+    <input type="password" id="d1" placeholder="Enter Date (DD/MM/YYYY)">
+    <button onclick="check('d1', 'MDMvMDkvMjAyNQ==', 'lock2')">Enter</button>
 </div>
 
-<!-- Step 2: Time Lock -->
 <div class="card hidden" id="lock2">
-    <h1>Special Time?</h1>
-    <input type="text" id="timeInput" placeholder="HH:MM">
-    <button onclick="unlock('timeInput', 'MTI6MTI=', 'gallery')">Show Memories</button>
+    <h2>Special Time? ⏳</h2>
+    <input type="password" id="d2" placeholder="Enter Time (HH:MM)">
+    <button onclick="check('d2', 'MTI6MTI=', 'gallery')">Show Memories</button>
 </div>
 
-<!-- Step 3: Gallery -->
 <div class="card hidden" id="gallery">
     <div class="gallery">
         <img src="https://i.ibb.co/qTHy9Ws/Screenshot-2026-07-03-12-31-51-73-99c04817c0de5652397fc8b56c3b3817.jpg" id="p1" style="display:block;">
@@ -35,19 +36,32 @@
         <img src="https://i.ibb.co/1GsCTyhL/Screenshot-2026-07-03-12-32-03-49-99c04817c0de5652397fc8b56c3b3817.jpg" id="p4">
         <img src="https://i.ibb.co/jPNxdBDv/Screenshot-2026-07-03-12-32-22-08-99c04817c0de5652397fc8b56c3b3817.jpg" id="p5">
     </div>
-    <button onclick="next()">Agli Yaad ❤️</button>
+    <button onclick="next()">Next Memory ❤️</button>
 </div>
 
 <script>
-    function unlock(inputId, secret, nextId) {
-        if (btoa(document.getElementById(inputId).value) === secret) {
+    function spawnHearts() {
+        for(let i=0; i<15; i++) {
+            let h = document.createElement('div');
+            h.innerHTML = "❤️"; h.className = "heart";
+            h.style.left = Math.random() * 100 + "vw";
+            h.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.getElementById('heart-container').appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }
+    }
+
+    function check(id, secret, nextId) {
+        if (btoa(document.getElementById(id).value) === secret) {
+            spawnHearts();
             document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
             document.getElementById(nextId).classList.remove('hidden');
-        } else { alert("Access Denied Hayati! ❤️"); }
+        } else { alert("Try Again Hayati! 💔"); }
     }
 
     let pCount = 1;
     function next() {
+        spawnHearts();
         document.getElementById('p'+pCount).style.display = 'none';
         pCount = (pCount >= 5) ? 1 : pCount + 1;
         document.getElementById('p'+pCount).style.display = 'block';
