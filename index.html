@@ -2,40 +2,49 @@
 <html lang="en">
 <head>
     <style>
-        body { margin: 0; background: radial-gradient(circle at center, #2d0b16, #000); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        .card { background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); text-align: center; width: 320px; backdrop-filter: blur(20px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); }
-        .gallery img { width: 250px; height: 250px; border-radius: 30px; object-fit: cover; display: none; border: 4px solid #ff3366; }
-        button { background: linear-gradient(45deg, #ff3366, #ff0055); border: none; padding: 12px 25px; color: white; border-radius: 25px; cursor: pointer; margin-top: 20px; font-weight: bold; transition: 0.3s; }
-        button:hover { transform: scale(1.05); }
-        .heart { position: absolute; color: #ff3366; font-size: 20px; animation: rain linear infinite; pointer-events: none; }
-        @keyframes rain { to { transform: translateY(100vh); } }
+        body { margin: 0; background: radial-gradient(circle, #2d0b16, #000); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        .card { background: rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 30px; border: 1px solid #ff3366; text-align: center; width: 300px; backdrop-filter: blur(15px); }
+        .hidden { display: none; }
+        input { background: rgba(255,255,255,0.1); border: 1px solid #ff3366; color: white; padding: 10px; width: 80%; border-radius: 10px; margin: 10px 0; }
+        button { background: #ff3366; border: none; padding: 10px 20px; color: white; border-radius: 20px; cursor: pointer; }
+        .gallery img { width: 250px; height: 250px; border-radius: 20px; object-fit: cover; display: none; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-<div id="heart-container"></div>
+<!-- Step 1: Lock -->
+<div class="card" id="lock1">
+    <h1>Welcome Hayati ❤️</h1>
+    <input type="text" id="dateInput" placeholder="Relationship Date (03/09/2025)">
+    <button onclick="unlock('dateInput', 'MDMvMDkvMjAyNQ==', 'lock2')">Unlock</button>
+</div>
 
-<div class="card">
+<!-- Step 2: Time Lock -->
+<div class="card hidden" id="lock2">
+    <h1>Special Time?</h1>
+    <input type="text" id="timeInput" placeholder="HH:MM">
+    <button onclick="unlock('timeInput', 'MTI6MTI=', 'gallery')">Show Memories</button>
+</div>
+
+<!-- Step 3: Gallery -->
+<div class="card hidden" id="gallery">
     <div class="gallery">
-        <img src="https://i.ibb.co/mFk4D8v/photo1.jpg" id="p1" style="display:block;">
-        <img src="https://i.ibb.co/L9p6z0t/photo2.jpg" id="p2">
-        <img src="https://i.ibb.co/v3Z5x7q/photo3.jpg" id="p3">
-        <img src="https://i.ibb.co/K2s8m9n/photo4.jpg" id="p4">
-        <img src="https://i.ibb.co/p5b2v1x/photo5.jpg" id="p5">
+        <img src="https://ibb.co/gk0jwPT" id="p1" style="display:block;">
+        <img src="https://ibb.co/hJ316dR1" id="p2">
+        <img src="https://ibb.co/Jw1bN0HR" id="p3">
+        <img src="https://ibb.co/KcD4qkZF" id="p4">
+        <img src="https://ibb.co/F4sQzZNK" id="p5">
     </div>
     <button onclick="next()">Agli Yaad ❤️</button>
 </div>
 
 <script>
-    setInterval(() => {
-        let h = document.createElement('div');
-        h.innerHTML = "❤️";
-        h.className = "heart";
-        h.style.left = Math.random() * 100 + "vw";
-        h.style.animationDuration = Math.random() * 3 + 2 + "s";
-        document.getElementById('heart-container').appendChild(h);
-        setTimeout(() => h.remove(), 5000);
-    }, 300);
+    function unlock(inputId, secret, nextId) {
+        if (btoa(document.getElementById(inputId).value) === secret) {
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+            document.getElementById(nextId).classList.remove('hidden');
+        } else { alert("Access Denied Hayati! ❤️"); }
+    }
 
     let pCount = 1;
     function next() {
