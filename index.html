@@ -1,74 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Girlfriend's Day ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        .glass-card { background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1); text-align: center; width: 90%; max-width: 400px; backdrop-filter: blur(25px); box-shadow: 0 0 40px rgba(255, 51, 102, 0.2); }
-        input { background: rgba(255,255,255,0.05); border: 1px solid #ff3366; color: #fff; padding: 15px; width: 80%; border-radius: 20px; margin: 20px 0; outline: none; text-align: center; }
-        button { background: #ff3366; border: none; padding: 15px 30px; color: #fff; border-radius: 25px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        .gallery img { width: 100%; height: 350px; object-fit: contain; border-radius: 20px; display: none; margin-bottom: 20px; }
-        #msg-box { margin-top: 20px; font-style: italic; color: #ffccd5; font-size: 18px; min-height: 100px; white-space: pre-line; }
-        .hidden { display: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #2c1635 0%, #110715 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Screen 1: Welcome */
+        .avatar-circle {
+            width: 90px;
+            height: 90px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.4);
+            font-size: 45px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ff69b4;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 15px;
+            color: #ddd;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Screen 2: Loading */
+        .loader-title {
+            font-size: 20px;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 14px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            padding: 2px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff416c, #ff69b4);
+            border-radius: 20px;
+            transition: width 0.1s linear;
+        }
+
+        .loading-status {
+            font-size: 14px;
+            color: #ff94c2;
+            font-style: italic;
+        }
+
+        .warning-text {
+            margin-top: 20px;
+            color: #ffb703;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Screen 3: Compliments List */
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: #ff69b4;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 25px;
+        }
+
+        .card-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .reveal-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .reveal-card.revealed {
+            background: rgba(255, 105, 180, 0.15);
+            border-color: rgba(255, 105, 180, 0.4);
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .reveal-card span.heart-icon {
+            font-size: 16px;
+        }
+
+        /* Screen 4: Note Box */
+        .note-box {
+            background: #ffe6f2;
+            color: #333;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .note-header {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #d63384;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .note-content {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Screen 5: Final Screen */
+        .final-avatar {
+            font-size: 55px;
+            margin-bottom: 20px;
+            animation: bounce 1.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        .final-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 
-<div class="glass-card" id="lock1">
-    <h1>Hayati ❤️</h1>
-    <input type="password" id="d1" placeholder="Enter Date (DD/MM/YYYY)">
-    <button onclick="unlock('d1', 'MDMvMDkvMjAyNQ==', 'lock2')">Enter</button>
-</div>
+    <div class="container">
+        <!-- Screen 1 -->
+        <div class="screen active" id="screen1">
+            <div class="avatar-circle">🧸</div>
+            <h1>Hey Beautiful</h1>
+            <p>Do you even know how cute you are?</p>
+            <button class="btn" onclick="startLoading()">Open My Heart 🤍</button>
+        </div>
 
-<div class="glass-card hidden" id="lock2">
-    <h1>Special Time? ⏳</h1>
-    <input type="password" id="d2" placeholder="Enter Time (HH:MM)">
-    <button onclick="unlock('d2', 'MTI6MTI=', 'gallery')">Show Memories</button>
-</div>
+        <!-- Screen 2 -->
+        <div class="screen" id="screen2">
+            <div class="loader-title">Measuring your cuteness...</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="loading-status" id="loadingStatus">Calculating cuteness...</div>
+            <div class="warning-text" id="warningText">⚠️ WARNING: TOO CUTE TO HANDLE</div>
+        </div>
 
-<div class="glass-card hidden" id="gallery">
-    <div class="gallery">
-        <img src="https://i.ibb.co/qTHy9Ws/Screenshot-2026-07-03-12-31-51-73-99c04817c0de5652397fc8b56c3b3817.jpg" id="p1" style="display:block;">
-        <img src="https://i.ibb.co/cS4XB8cX/Screenshot-2026-07-03-12-32-35-11-99c04817c0de5652397fc8b56c3b3817.jpg" id="p2">
-        <img src="https://i.ibb.co/cKwfFH5D/Screenshot-2026-07-03-12-32-13-51-99c04817c0de5652397fc8b56c3b3817.jpg" id="p3">
-        <img src="https://i.ibb.co/1GsCTyhL/Screenshot-2026-07-03-12-32-03-49-99c04817c0de5652397fc8b56c3b3817.jpg" id="p4">
-        <img src="https://i.ibb.co/jPNxdBDv/Screenshot-2026-07-03-12-32-22-08-99c04817c0de5652397fc8b56c3b3817.jpg" id="p5">
+        <!-- Screen 3 -->
+        <div class="screen" id="screen3">
+            <div class="section-title">Just for you</div>
+            <div class="subtitle">Tap each one to reveal</div>
+            <div class="card-list" id="cardList">
+                <div class="reveal-card" onclick="revealCard(this, 'You look adorable')">
+                    <span>❤️</span><span class="heart-icon">🤍</span>
+                </div>
+                <div class="reveal-card" onclick="revealCard(this, 'You have the sweetest vibe')">
+                    <span>❤️</span><span class="heart-icon">🤍</span>
+                </div>
+                <div class="reveal-card" onclick="revealCard(this, 'You make things feel lighter')">
+                    <span>❤️</span><span class="heart-icon">🤍</span>
+                </div>
+                <div class="reveal-card" onclick="revealCard(this, 'You are naturally charming')">
+                    <span>❤️</span><span class="heart-icon">🤍</span>
+                </div>
+                <div class="reveal-card" onclick="revealCard(this, 'You make everything feel more special')">
+                    <span>❤️</span><span class="heart-icon">🤍</span>
+                </div>
+            </div>
+            <button class="btn" onclick="nextScreen(4)">See more ➔</button>
+        </div>
+
+        <!-- Screen 4 -->
+        <div class="screen" id="screen4">
+            <h2 style="margin-bottom: 20px; font-size: 22px; color: #ff69b4;">A little note for you</h2>
+            <div class="note-box">
+                <div class="note-header" id="noteToggle" onclick="openNote()">
+                    🎀 Tap to open
+                </div>
+                <div class="note-content" id="noteContent">
+                    I just wanted to tell you something... you really are special in a way that's hard to explain. There's a softness in the way you talk, a sweetness in the way you smile, and something genuine about you that just feels good to be around. You don't try to be anything extra, you're just you, and that's what makes you so lovely.
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5 -->
+        <div class="screen" id="screen5">
+            <div class="final-avatar">💖</div>
+            <div class="final-title">You'll always be special to me</div>
+            <p style="color: #aaa; font-size: 13px; margin-top: 10px;">Happy Girlfriend's Day!</p>
+        </div>
     </div>
-    <button id="nextBtn" onclick="next()">Next Memory ❤️</button>
-    <div id="msg-box"></div>
-</div>
 
-<script>
-    let pCount = 1;
-    const text = `Happy 11th monthsary, meri jaan ❤️ It’s crazy how distance kabhi kabhi itni lambi lagti hai, par phir bhi humara pyaar usse bhi zyada strong hai. Har din tumse baat karna, tumhari awaaz sunna, aur tumhari chhoti chhoti baaton pe hasna—ye sab mere liye duniya ki sabse precious cheezein hain. Kabhi kabhi mann karta hai ki bas sab chhod ke tumhare paas aa jaun, tumhe tight hug karun aur bataun ki tum mere liye kitni important ho. Long distance easy nahi hota, I know… par tumhare saath hone ka ehsaas har mushkil ko easy bana deta hai.
-
-Tum sirf meri girlfriend nahi ho, tum meri best friend, meri strength aur meri happiness ho. Jab bhi main down feel karta hoon, tumhari ek smile ya ek message mujhe phir se theek kar deta hai. Itne months mein humne itna kuch face kiya hai, phir bhi hum saath hain—that’s what makes us special. Main bas yahi chahta hoon ki hum aise hi hamesha saath rahein, chahe distance kitna bhi ho.
-
-I promise, ek din ye distance khatam hoga aur hum ek saath honge—real hugs, real smiles, aur bina kisi screen ke pyaar. Tab tak, main har din tumhe utna hi pyaar karta rahunga, jitna pehle din kiya tha… aur shayad usse bhi zyada ❤️ I love you so much, meri jaan. Happy 11 months to us 💕`;
-    
-    function unlock(id, secret, nextId) {
-        if (btoa(document.getElementById(id).value) === secret) {
-            document.querySelectorAll('.glass-card').forEach(c => c.classList.add('hidden'));
-            document.getElementById(nextId).classList.remove('hidden');
-        } else { alert("Try Again Hayati! 💔"); }
-    }
-
-    function next() {
-        document.getElementById('p'+pCount).style.display = 'none';
-        pCount++;
-        if(pCount <= 5) {
-            document.getElementById('p'+pCount).style.display = 'block';
-        } else {
-            document.getElementById('nextBtn').style.display = 'none';
-            typeWriter(0);
+    <script>
+        function nextScreen(screenNumber) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + screenNumber).classList.add('active');
         }
-    }
 
-    function typeWriter(i) {
-        if (i < text.length) {
-            document.getElementById("msg-box").innerHTML += text.charAt(i);
-            setTimeout(() => typeWriter(i + 1), 70);
+        function startLoading() {
+            nextScreen(2);
+            let width = 0;
+            const bar = document.getElementById('progressBar');
+            const status = document.getElementById('loadingStatus');
+            const warning = document.getElementById('warningText');
+
+            let interval = setInterval(() => {
+                if (width >= 120) {
+                    clearInterval(interval);
+                    warning.style.opacity = '1';
+                    setTimeout(() => {
+                        nextScreen(3);
+                    }, 1500);
+                } else {
+                    width += 2;
+                    bar.style.width = Math.min(width, 100) + '%';
+                    if (width > 90) {
+                        status.innerText = width + '% — Almost off the charts!';
+                    } else if (width > 50) {
+                        status.innerText = width + '% — Scanning sweetness...';
+                    } else {
+                        status.innerText = width + '% — Calculating cuteness...';
+                    }
+                }
+            }, 35);
         }
-    }
-</script>
+
+        let revealedCount = 0;
+        function revealCard(element, text) {
+            if (!element.classList.contains('revealed')) {
+                element.classList.add('revealed');
+                element.innerHTML = `<span>${text}</span><span>❤️</span>`;
+                revealedCount++;
+            }
+        }
+
+        function openNote() {
+            const content = document.getElementById('noteContent');
+            const toggle = document.getElementById('noteToggle');
+            
+            content.style.display = 'block';
+            toggle.style.display = 'none';
+
+            // Show next button after opening the note
+            setTimeout(() => {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.style.marginTop = '20px';
+                btn.style.width = '100%';
+                btn.innerText = 'One more thing ➔';
+                btn.onclick = () => nextScreen(5);
+                document.querySelector('.note-box').appendChild(btn);
+            }, 300);
+        }
+
+        // Auto restart/refresh page every 6 hours (6 hours = 21,600,000 milliseconds)
+        setTimeout(function() {
+            location.reload();
+        }, 6 * 60 * 60 * 1000);
+    </script>
 </body>
 </html>
